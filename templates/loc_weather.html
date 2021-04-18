@@ -1,0 +1,250 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} 
+{% block title%} <title>weather</title>{% endblock %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/weather.css' %}" />
+{% endblock %} 
+
+{% block content %}
+<br>
+{% if weather_url.error %}
+<h1 class="text-center mt-5 error">{{weather_url.error.message}}</h1>
+{% else %}
+<h2 class="text-center mt-5 mb-2">Current Weather {{ search|capfirst }}</h2>
+<br>
+<div class="search text-center">
+  <form class="form-inline justify-content-center" method="get" action="{% url 'search' %}">
+    <input class="form-control" name="q" type="text" placeholder="E.g India" aria-label="Search" value="{{ search }}" required style="width: 15em"/>
+    <button class="btn btn-elegant btn-rounded btn-md my-0" type="submit"> Search </button>
+  </form>
+</div>
+<br>
+
+<div class="current ml-3 mr-3">
+  <div class="card-deck mt-3 mx-3 mb-1">
+    <div class="card text-center">
+      <div class="card-body">
+        <h4 class="card-title" style="text-transform: uppercase; text-align: center">
+          <img src="{% static "weather_pic/035-windy.svg" %}" alt="temp_logo" width="35px;">CURRENT TEMPERATURE
+        </h4>
+        <p class="card-text" style="font-size: 30px; text-transform: capitalize">
+          {{ weather_url.current.temp_c }}° C
+          <br>
+          <img src="http:{{weather_url.current.condition.icon}}" alt="Image" />
+          <small class="text-muted">{{ weather_url.current.condition.text }}</small>
+        </p>
+      </div>
+    </div>
+
+    <div class="card text-center">
+      <div class="card-body">
+        <h4 class="card-title" style="text-transform: uppercase; text-align: center">
+          <img src="{% static "weather_pic/wind228.svg" %}" alt="temp_logo" width="35px;">AIR DETAILS</h4>
+        <p class="card-text" style="font-size: 25px; text-align: center">
+          <small class="text-muted">Humidity</small>
+          {{ weather_url.current.humidity }}% <br>
+          <small class="text-muted">Atmosphere pressure</small>
+          {{ weather_url.current.pressure_in }} inHG
+        </p>
+      </div>
+    </div>
+
+    <div class="card text-center">
+      <div class="card-body">
+        <h4
+          class="card-title"
+          style="text-transform: uppercase; text-align: center">
+          <img src="{% static "weather_pic/001-wind-1.svg" %}" alt="temp_logo"
+          width="35px;">WIND
+        </h4>
+        <p class="card-text" style="font-size: 25px; text-align: center">
+          <small class="text-muted">wind speed</small>
+          {{ weather_url.current.wind_kph }} m/s<br>
+          <small class="text-muted">wind direction</small>
+          {{ weather_url.current.wind_degree }}°
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-deck mx-3 mt-4">
+    <div class="card text-center">
+      <div class="card-body">
+        <h4
+          class="card-title"
+          style="text-transform: uppercase; text-align: center">
+          <img src="{% static "weather_pic/thermometer.svg" %}" alt="temp_logo"
+          width="23px;">UV INDEX
+        </h4>
+        <p class="card-text" style="font-size: 25px; text-align: center">
+          <small class="text-muted">ultraviolet (UV) </small>
+          <br>
+          {{ weather_url.current.uv }}<br>
+        </p>
+      </div>
+    </div>
+
+    <div class="card text-center">
+      <div class="card-body">
+        <h4
+          class="card-title"
+          style="text-transform: uppercase; text-align: center">
+          <img src="{% static "weather_pic/049-clouds.svg" %}" alt="temp_logo"
+          width="23px;">Cloudiness
+        </h4>
+        <p class="card-text" style="font-size: 25px; text-align: center">
+          <small class="text-muted">cloud </small>
+          <br>
+          {{ weather_url.current.cloud }} %<br>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <br>
+</div>
+<br>
+
+<div class="weather container mt-5" id="hourly">
+  <h2 class="text-center mb-5">Hourly Weather {{ search|capfirst }}</h2>
+  <div id="accordion">
+    {% for daily in daily_weather %}
+    <div class="card">
+      <div id="headingOne">
+        <div
+          class="mb-0 weather-hr"
+          data-toggle="collapse"
+          data-target="#daily{{daily.coll}}"
+          aria-expanded="false"
+          aria-controls="collapseOne">
+          <h2 class="date">
+            <span>{{daily.time}}</span>
+            <span class="sub">{{daily.date}}</span>
+          </h2>
+          <div class="img">
+            <img src="{{daily.icon}}" alt="icon"/>
+          </div>
+          <div class="temp">
+            <h1>{{daily.temp_c}}°C</h1>
+          </div>
+          <div class="condition">
+            <h2>{{daily.condition}}</h2>
+          </div>
+          <div class="humidity">
+            <h2>{{daily.humidity}}%</h2>
+          </div>
+          <div class="icon">
+            <i class="fas fa-angle-down rotate-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card body -->
+      <div
+        id="daily{{daily.coll}}"
+        class="collapse"
+        aria-labelledby="headingOne"
+        data-parent="#accordion">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="left">
+                <p>Temperature<span class="value">{{daily.temp_c}}°C</span></p>
+                <p>Wind Gusts<span class="value">{{daily.wind}} km/h</span></p>
+                <p>Wind Chill<span class="value">{{daily.wind_chill}}%</span></p>
+                <p>Uv <span class="value">{{daily.uv}}</span></p>
+                <p>Humidity<span class="value">{{daily.humidity}}%</span></p>
+                <p>Cloud<span class="value">{{daily.cloud}}%</span></p>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="right">
+                <p>Chance of Rain<span class="value">{{daily.chance_of_rain}}%</span></p>
+                <p>Dew Point<span class="value">{{daily.dewpoint}}° C</span></p>
+                <p>Heat Index<span class="value">{{daily.heatindex}}°</span></p>
+                <p>Visibility<span class="value">{{daily.visibility}} km</span></p>
+                <p>Pressure<span class="value">{{daily.pressure_in}}inHG</span></p>
+                <p>Precipitation<span class="value">{{daily.precip_mm}}mm</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    {% endfor %}
+  </div>
+</div>
+
+<div class="weather container mt-5" id="forecast">
+  <h2 class="text-center mb-5">Forecast Weather {{ search|capfirst }}</h2>
+  <div id="accordion">
+    {% for forecast in forecast_weather %}
+    <div class="card">
+      <div id="headingOne">
+        <div
+          class="mb-0 weather-hr"
+          data-toggle="collapse"
+          data-target="#forecast{{forecast.coll}}"
+          aria-expanded="false"
+          aria-controls="collapseOne">
+          <h2 class="date">
+            <span class="sub">{{forecast.date}}</span>
+          </h2>
+          <div class="img">
+            <img src="{{forecast.icon}}" alt="icon" />
+          </div>
+          <div class="temp">
+            <h1>{{forecast.max_temp}}°C</h1>
+          </div>
+          <div class="condition">
+            <h2>{{forecast.condition}}</h2>
+          </div>
+          <div class="humidity">
+            <h2>{{forecast.humidity}}%</h2>
+          </div>
+          <div class="icon">
+            <i class="fas fa-angle-down rotate-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card body -->
+      <div
+        id="forecast{{forecast.coll}}"
+        class="collapse"
+        aria-labelledby="headingOne"
+        data-parent="#accordion">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="left">
+                <p>Max. Temperature<span class="value">{{forecast.max_temp}}°C</span></p>
+                <p>Min. Temperature<span class="value">{{forecast.min_temp}}°C</span></p>
+                <p>Avg. Temperature<span class="value">{{forecast.avgtemp_c}}°C</span></p>
+                <p>Uv <span class="value">{{forecast.uv}}</span></p>
+                <p>Humidity<span class="value">{{forecast.humidity}}%</span></p>
+                <p>Wind Gusts<span class="value">{{forecast.wind_kph}}km/h</span></p>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="right">
+                <p>Chance of Rain<span class="value">{{forecast.chance_of_rain}}%</span></p>
+                <p>Visibility<span class="value">{{forecast.vis_km}} km</span></p>
+                <p>Precipitation<span class="value">{{forecast.precip_mm}}mm</span></p>
+                <p>Sunrise<span class="value">{{forecast.sunrise}}</span></p>
+                <p>Sunset<span class="value">{{forecast.sunset}}</span></p>
+                <p>Moon phase<span class="value">{{forecast.moon_phase}}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    {% endfor %}
+  </div>
+</div>
+
+{% endif %} {% endblock %}

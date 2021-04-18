@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=wght@100&family=Ubuntu:wght@300&display=swap');
+body {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 300;
+    background: #0000000d;
+}
+
+.weather-hr {
+    padding: .7rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    -webkit-box-pack: justify;
+    cursor: pointer;
+}
+
+.date {
+    min-width: 52px;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.weather-hr .date span {
+    display: block;
+}
+
+.img img {
+    width: 65px;
+    height: 65px;
+}
+
+.weather-deatils {
+    background-color: beige;
+}
+
+.row {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+
+.value {
+    float: right;
+}
+
+.error {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+@media screen and (max-device-width: 767px) {
+    .img img {
+        width: 50px;
+        height: 50px;
+    }
+    .temp h1 {
+        font-size: 21px;
+    }
+    .condition h2,
+    .humidity h2 {
+        font-size: 20px;
+    }
+}
