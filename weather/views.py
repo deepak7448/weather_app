@@ -9,14 +9,14 @@ from requests.exceptions import ConnectionError
 
 
 def daily(request):
-    # try:
-    #     ip=requests.get("https://get.geojs.io/v1/ip/geo.json").json()
-    #     ct=ip['city']
-    #     weather_url = requests.get(f"http://api.weatherapi.com/v1/forecast.json?key=c24d3c9a5d00456d8ff70958210604&q={ct}&days=1&aqi=no&alerts=no").json()
-    # except:
-    search = request.GET['q']
-    weather = f"http://api.weatherapi.com/v1/forecast.json?key=c24d3c9a5d00456d8ff70958210604&q={search}&days=1&aqi=no&alerts=no"
-    weather_url = requests.get(weather).json()
+    try:
+        ip=requests.get("https://get.geojs.io/v1/ip/geo.json").json()
+        ct=ip['city']
+        weather_url = requests.get(f"http://api.weatherapi.com/v1/forecast.json?key=c24d3c9a5d00456d8ff70958210604&q={ct}&days=1&aqi=no&alerts=no").json()
+    except:
+        search = request.GET['q']
+        weather = f"http://api.weatherapi.com/v1/forecast.json?key=c24d3c9a5d00456d8ff70958210604&q={search}&days=1&aqi=no&alerts=no"
+        weather_url = requests.get(weather).json()
     daily_weather=[]
     x=datetime.now()
     now= x.time()
