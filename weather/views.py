@@ -54,12 +54,12 @@ def daily(request):
 def forecast(request):
     try:
         search = request.GET['q']
-        weather = f"http://api.weatherapi.com/v1/forecast.json?key=c24d3c9a5d00456d8ff70958210604&q={search}&days=1&aqi=no&alerts=no"
+        weather = f"http://api.weatherapi.com/v1/forecast.json?key=c24d3c9a5d00456d8ff70958210604&q={search}&days=3&aqi=no&alerts=no"
         weather_url = requests.get(weather).json()
     except:
         ip=requests.get("https://get.geojs.io/v1/ip/geo.json").json()
         ct=ip['city']
-        weather_url = requests.get(f"http://api.weatherapi.com/v1/forecast.json?key=c24d3c9a5d00456d8ff70958210604&q={ct}&days=1&aqi=no&alerts=no").json()
+        weather_url = requests.get(f"http://api.weatherapi.com/v1/forecast.json?key=c24d3c9a5d00456d8ff70958210604&q={ct}&days=3&aqi=no&alerts=no").json()
     fore=[]
     for j in weather_url['forecast']['forecastday'][::1]:
         date =  j['date']
