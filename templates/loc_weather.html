@@ -58,7 +58,7 @@
         </h4>
         <p class="card-text" style="font-size: 25px; text-align: center">
           <small class="text-muted">wind speed</small>
-          {{ weather_url.current.wind_kph }} m/s<br>
+          {{ weather_url.current.wind_kph }} kph<br>
           <small class="text-muted">wind direction</small>
           {{ weather_url.current.wind_degree }}°
         </p>
@@ -99,16 +99,15 @@
       </div>
     </div>
   </div>
- {{ weather_url.location.region }}
-  {{ weather_url.location.country }}
   <br>
 </div>
 <br>
 
 <div class="weather container mt-5" id="hourly">
-  <h2 class="text-center mb-5">Hourly Weather {{ search|capfirst }}</h2>
+ <h2 class="text-center mb-5">Hourly Weather {{ search|capfirst }}</h2>
   <div id="accordion">
     {% for daily in daily_weather %}
+   
     <div class="card">
       <div id="headingOne">
         <div
@@ -125,7 +124,7 @@
             <img src="{{daily.icon}}" alt="icon"/>
           </div>
           <div class="temp">
-            <h1>{{daily.temp_c}}°C</h1>
+            <h1>{{daily.temp}}°C</h1>
           </div>
           <div class="condition">
             <h2>{{daily.condition}}</h2>
@@ -149,22 +148,22 @@
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="left">
-                <p>Temperature<span class="value">{{daily.temp_c}}°C</span></p>
-                <p>Wind Gusts<span class="value">{{daily.wind}} km/h</span></p>
-                <p>Wind Chill<span class="value">{{daily.wind_chill}}%</span></p>
+                <p>Temperature<span class="value">{{daily.temp}} °C</span></p>
+                <p>Wind Gusts<span class="value">{{daily.wind}} kph</span></p>
+                <p>Wind Chill<span class="value">{{daily.wind_chill}} %</span></p>
                 <p>Uv <span class="value">{{daily.uv}}</span></p>
-                <p>Humidity<span class="value">{{daily.humidity}}%</span></p>
-                <p>Cloud<span class="value">{{daily.cloud}}%</span></p>
+                <p>Humidity<span class="value">{{daily.humidity}} %</span></p>
+                <p>Cloud<span class="value">{{daily.cloud}} %</span></p>
               </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="right">
-                <p>Chance of Rain<span class="value">{{daily.chance_of_rain}}%</span></p>
-                <p>Dew Point<span class="value">{{daily.dewpoint}}° C</span></p>
-                <p>Heat Index<span class="value">{{daily.heatindex}}°</span></p>
+                <p>Chance of Rain<span class="value">{{daily.chance_of_rain}} %</span></p>
+                <p>Dew Point<span class="value">{{daily.dewpoint}} ° C</span></p>
+                <p>Heat Index<span class="value">{{daily.heatindex}} °</span></p>
                 <p>Visibility<span class="value">{{daily.visibility}} km</span></p>
-                <p>Pressure<span class="value">{{daily.pressure_in}}inHG</span></p>
-                <p>Precipitation<span class="value">{{daily.precip_mm}}mm</span></p>
+                <p>Pressure<span class="value">{{daily.pressure_in}} inHG</span></p>
+                <p>Precipitation<span class="value">{{daily.precip_mm}} mm</span></p>
               </div>
             </div>
           </div>
@@ -196,13 +195,13 @@
             <img src="{{forecast.icon}}" alt="icon" />
           </div>
           <div class="temp">
-            <h1>{{forecast.max_temp}}°C</h1>
+            <h1>{{forecast.max_temp}} °C</h1>
           </div>
           <div class="condition">
             <h2>{{forecast.condition}}</h2>
           </div>
           <div class="humidity">
-            <h2>{{forecast.humidity}}%</h2>
+            <h2>{{forecast.humidity}} %</h2>
           </div>
           <div class="icon">
             <i class="fas fa-angle-down rotate-icon"></i>
@@ -220,19 +219,19 @@
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="left">
-                <p>Max. Temperature<span class="value">{{forecast.max_temp}}°C</span></p>
-                <p>Min. Temperature<span class="value">{{forecast.min_temp}}°C</span></p>
-                <p>Avg. Temperature<span class="value">{{forecast.avgtemp_c}}°C</span></p>
+                <p>Max. Temperature<span class="value">{{forecast.max_temp}} °C</span></p>
+                <p>Min. Temperature<span class="value">{{forecast.min_temp}} °C</span></p>
+                <p>Avg. Temperature<span class="value">{{forecast.avgtemp_c}} °C</span></p>
                 <p>Uv <span class="value">{{forecast.uv}}</span></p>
-                <p>Humidity<span class="value">{{forecast.humidity}}%</span></p>
-                <p>Wind Gusts<span class="value">{{forecast.wind_kph}}km/h</span></p>
+                <p>Humidity<span class="value">{{forecast.humidity}} %</span></p>
+                <p>Wind Gusts<span class="value">{{forecast.wind_kph}} kph</span></p>
               </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="right">
-                <p>Chance of Rain<span class="value">{{forecast.chance_of_rain}}%</span></p>
+                <p>Chance of Rain<span class="value">{{forecast.chance_of_rain}} %</span></p>
                 <p>Visibility<span class="value">{{forecast.vis_km}} km</span></p>
-                <p>Precipitation<span class="value">{{forecast.precip_mm}}mm</span></p>
+                <p>Precipitation<span class="value">{{forecast.precip_mm}} mm</span></p>
                 <p>Sunrise<span class="value">{{forecast.sunrise}}</span></p>
                 <p>Sunset<span class="value">{{forecast.sunset}}</span></p>
                 <p>Moon phase<span class="value">{{forecast.moon_phase}}</span></p>
