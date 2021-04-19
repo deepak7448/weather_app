@@ -177,6 +177,7 @@ def search(request):
                         curt_date = dates.strftime('%m/%d')
                         coll = times.strftime('%I')
                         weather={
+                            "coll":coll,
                             "time":curt_time,
                             "date":curt_date,
                             "temp":i['temp_c'],
