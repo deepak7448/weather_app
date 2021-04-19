@@ -145,10 +145,9 @@ def location_weather(request):
         except KeyError:
             pass
         content={
-                'weather_url':weather_url,
-                'daily_weather':daily,
-                'forecast_weather':fore
-            }
+            'weather_url':weather_url,
+            'daily_weather':daily,
+            'forecast_weather':fore}
         return render(request,'loc_weather.html',content)
 
 def search(request):
