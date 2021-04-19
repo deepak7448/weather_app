@@ -97,7 +97,7 @@ def location_weather(request):
                         dates = datetime.strptime(time,'%Y-%m-%d %H:%M').date()
                         if current_time < times:
                             curt_time = times.strftime('%I %p')
-                            curt_date = dates.strftime('%m/%d')
+                            curt_date = dates.strftime('%m-%d')
                             coll = times.strftime('%I%p')
                             weather={
                                 "coll":coll,
